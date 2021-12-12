@@ -1,0 +1,11 @@
+komut iþlemi
+
+pip install flask
+pip install --user bootstrap-py
+pip install Flask-Bootstrap
+pip install Flask-WTF
+pip install Flask-SQLAlchemy
+pip install Flask-Login
+pip install fernet
+pip install python-cryptography-fernet-wrapper
+pip install email_validator
