@@ -1,3 +1,5 @@
+import os
+import datetime
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask import flash
@@ -7,11 +9,9 @@ from wtforms.validators import InputRequired, Email, Length
 from flask_sqlalchemy  import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-import os
 from flask import request, send_from_directory
 from cryptography.fernet import Fernet
-import datetime
-
+ 
 
 
 
@@ -42,7 +42,6 @@ class FileContents(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     name=db.Column(db.String(300))
     data=db.Column(db.LargeBinary)
-    # e_data=db.Column(db.LargeBinary)
     key=db.Column(db.String(1000))
     user=db.Column(db.String(100))
     date=db.Column(db.String(100))
@@ -92,6 +91,9 @@ def login():
 
     return render_template('login.html', form=form)
 
+
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
@@ -115,10 +117,9 @@ def create_tables():
     db.create_all()
 
 
+
 @app.route("/upload", methods=["POST"])
 def upload():
-
-
     target = os.path.join(APP_ROOT, 'safebox/')
 
     if not os.path.isdir(target):
@@ -199,14 +200,14 @@ def send_image(filename):
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    myfiles=FileContents.query.all()
 
-    return render_template('dashboard.html', name=current_user.username, email=current_user.email)
+    return render_template('dashboard.html', name=current_user.username, email=current_user.email, myfiles=myfiles)
 
 
 
 @app.route('/logout')
 @login_required
-
 def logout():
     logout_user()
     return redirect(url_for('index'))
