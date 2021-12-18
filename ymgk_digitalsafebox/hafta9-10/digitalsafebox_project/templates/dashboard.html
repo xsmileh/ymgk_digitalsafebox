@@ -76,10 +76,16 @@ Dashboard
             <input id="file-picker" type="file" name="file" class="drop-zone__input" multiple style="display: none">
           </div>
 
-
-
+        </br>
+          <div style="padding-left: 40%; padding-right: 40%; padding-bottom: 50px;">
           <!-- <input type="text" value="Key" id="upload-key"> -->
+
           <input type="submit" value="Upload!" id="upload-button">
+
+          <input type="submit" value="Delete!" id="delete-button">
+
+          <input type="submit" value="Reload!" id="reload-button">
+          </div>
           </form>
 
 
@@ -118,94 +124,31 @@ Dashboard
           <h2 class="sub-header">Dosya Bilgileri</h2>
           <div class="table-responsive">
             <table class="table table-striped">
+
+
+
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Dosya Adı</th>
                   <th>Dosya Key</th>
                   <th>Kayıt Tarihi</th>
-                  <th>Header</th>
+                  <th colspan="4", style="text-align: center;">Dosya işlemleri</th>
                 </tr>
               </thead>
               <tbody>
+                {% for file in myfiles %}
                 <tr>
-                  <td>{{data}}</td>
-                  <td>{{key}}</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
+                  <td>{{file.id}}</td>
+                  <td>{{file.name}}</td>
+                  <td>{{file.key}}</td>
+                  <td>{{file.date}}</td>
+                  <td>İndir</td>
+                  <td>Favori</td>
+                  <td>Paylaş</td>
+                  <td>Sil</td>
                 </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>nisi</td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>at</td>
-                </tr>
-                <tr>
-                  <td>1,006</td>
-                  <td>nibh</td>
-                  <td>elementum</td>
-                  <td>imperdiet</td>
-                  <td>Duis</td>
-                </tr>
-                <tr>
-                  <td>1,007</td>
-                  <td>sagittis</td>
-                  <td>ipsum</td>
-                  <td>Praesent</td>
-                  <td>mauris</td>
-                </tr>
-                <tr>
-                  <td>1,008</td>
-                  <td>Fusce</td>
-                  <td>nec</td>
-                  <td>tellus</td>
-                  <td>sed</td>
-                </tr>
-                <tr>
-                  <td>1,009</td>
-                  <td>augue</td>
-                  <td>semper</td>
-                  <td>porta</td>
-                  <td>Mauris</td>
-                </tr>
-                <tr>
-                  <td>1,010</td>
-                  <td>massa</td>
-                  <td>Vestibulum</td>
-                  <td>lacinia</td>
-                  <td>arcu</td>
-                </tr>
-                
+                {% endfor %}
               </tbody>
             </table>
           </div>
