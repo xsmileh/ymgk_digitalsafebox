@@ -1,0 +1,172 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='dashboard.css')}}">
+<link rel="stylesheet" type="text/css" href="./static/main.css">
+{% endblock %}
+
+{% block content %}
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Digital Safe Box</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <!-- <li><a href="#">Ayarlar</a></li> -->
+            <li><a href="#">Profil</a></li>
+            <li><a href="{{ url_for('logout') }}">Çıkış</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Arama...">
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Dosyalarım <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Favorilerim</a></li>
+            <li><a href="#">Paylaşılanlar</a></li>
+            <li><a href="#">Profil</a></li>
+          </ul>
+          <!-- <ul class="nav nav-sidebar">
+            <li><a href="">Nav item</a></li>
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+            <li><a href="">More navigation</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+          </ul> -->
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header" id="ip" method="GET">Hoşgeldin, {{id}} nolu kullanici, {{ name }} //{{request.remote_addr}} </h1>
+
+          {% for message in get_flashed_messages() %}
+          <div class="alert alert-warning">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{ message }}
+          </div>
+          {% endfor %}
+
+
+          <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+          <div class="drop-zone" style="border: 2px dashed #428BCA; width:100%;">
+            <span class="drop-zone__prompt">Dosyayı buraya bırakın veya yüklemek için tıklayın</span>
+            <input id="file-picker" type="file" name="file" class="drop-zone__input" multiple style="display: none">
+          </div>
+
+          </br>
+          <div style="padding-left: 40%; padding-right: 40%; padding-bottom: 50px;">
+          <!-- <input type="text" value="Key" id="upload-key"> -->
+
+          <input type="submit" value="Upload!" id="upload-button">
+          </form>
+
+
+          <form method="POST" action="{{ url_for('delete') }}">
+          <input type="submit" value="Remove!" id="delete-button">
+          </form>
+
+          </div>
+        
+
+
+
+          <div class="row placeholders">
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="150" height="150" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="150" height="150" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="150" height="150" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="150" height="150" class="img-responsive" alt="Generic placeholder thumbnail">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+          </div>
+
+
+
+
+
+
+
+
+
+          <h2 class="sub-header">Dosya Bilgileri</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+
+
+
+              <thead>
+                <tr>
+                  <th>Dosya ID</th>
+                  <th>Dosya Adı</th>
+                  <th>Dosya Key</th>
+                  <th>Kayıt Tarihi</th>
+                  <th colspan="4", style="text-align: center;">Dosya işlemleri</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for file in my_files %}
+                {% if name==file.user %}
+                
+                <tr>
+                  <td>{{file.id}}</td>
+                  <td>{{file.name}}</td>
+                  <td>{{file.key}}</td>
+                  <td>{{file.date}}</td>
+
+                  <td>İndir</td>
+                  <td>Favori</td>
+                  <td>Paylaş</td>
+                  <td>Sil</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+<script src="./static/main.js"></script>
+
+{% endblock %}
